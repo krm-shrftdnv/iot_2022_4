@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+//option java_multiple_files = true;
+//option java_package = "io.grpc.examples.multipliers";
+//option java_outer_classname = "MultipliersProto";
+//option objc_class_prefix = "MP";
+
+package multipliers;
+
+service Multipliers{
+  rpc ListFeatures(Number) returns (stream Number) {}
+}
+
+message Number {
+  int32 value = 1;
+}
