@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+service StandardDeviation {
+   rpc StandardDeviation(stream Number) returns (Number) {}
+}
+message Number {
+    float value = 1;
+}
