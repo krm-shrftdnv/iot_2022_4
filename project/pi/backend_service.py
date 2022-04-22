@@ -63,7 +63,7 @@ client_subscriber.connect(BROKER_ADDRESS, BROKER_PORT, 60)
 client_subscriber.subscribe(COMMAND_TOPIC)
 client_subscriber.loop_start()
 
-schedule.every(PUBLISH_INTERVAL).seconds.do(publish_threaded(publish_indications()))
+schedule.every(PUBLISH_INTERVAL).seconds.do(publish_threaded(publish_indications))
 while True:
     schedule.run_pending()
     time.sleep(1)
