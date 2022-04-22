@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+ package com.example.demo.controller;
 
 import com.example.demo.model.Control;
 import com.example.demo.model.Indications;
