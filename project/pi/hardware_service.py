@@ -41,7 +41,7 @@ def command():
                 turn_led_on()
                 ALERT = False
         elif command == 'alert_off':
-            if ALERT:
+            if not ALERT:
                 turn_led_off()
                 ALERT = True
         else:
