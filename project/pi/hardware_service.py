@@ -5,7 +5,6 @@ import json
 
 app = Flask(__name__)
 
-ALERT = False
 LED_PIN = 40
 
 
@@ -38,13 +37,9 @@ def command():
         content = request.json
         command = content['command']
         if command == 'alert':
-            if not ALERT:
-                turn_led_on()
-                ALERT = True
+            turn_led_on()
         elif command == 'alert_off':
-            if not ALERT:
-                turn_led_off()
-                ALERT = False
+            turn_led_off()
         else:
             return json.dumps({'error': 'Unsupported command'}), 400
         return json.dumps({'result': 'OK'}), 200
