@@ -17,9 +17,9 @@ ____
       - Модуль качества воздуха CJMCU-8128 с датчиком CCS811 для получения значений содержания углекислого газа и tVOC 
       - Светодиод для уведомления пользователя о достижении критических значений CO2 и tVOC
     - Компоненты:
-      - hardware_service - сервис на Raspberry Pi для работы с железом (Реализация: Python, Flask)
-      - backend_service - посредник, между hardware_service и backend (Реализация: Python)
-      - backend - веб-сервер. Анализирует показания с датчика и управляет сбором показаний и выводом алертов посредством команд (Реализация: Java, Spring)
-      - frontend - веб-страница для вывода графического представления показаний датчика и алертов (Реализация: JavaScript)
+      - `hardware_service` - сервис на Raspberry Pi для работы с железом (Реализация: Python, Flask)
+      - `backend_service` - посредник, между `hardware_service` и `backend` (Реализация: Python)
+      - `backend` - веб-сервер. Анализирует показания с датчика и управляет сбором показаний и выводом алертов посредством команд (Реализация: Java, Spring). `API`: [Swagger](https://app.swaggerhub.com/apis-docs/krm-shrftdnv/itis_team_4/0.0.1)
+      - `frontend` - веб-страница для вывода графического представления показаний датчика и алертов (Реализация: JavaScript)
     - Графическое представление взаимосвязи компонентов:
-    - ![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+     ![Архитектура](https://github.com/krm-shrftdnv/iot_2022_4/blob/1fba4c4fa7a2f307c3ba825c190f62c846069d8a/project/diagram/project_archdrawio.png?raw=true)
