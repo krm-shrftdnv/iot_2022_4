@@ -15,6 +15,7 @@ def turn_led_on():
 
 
 def turn_led_off():
+    IO.setup(LED_PIN, IO.OUT)
     IO.output(LED_PIN, 0)
 
 
