@@ -46,6 +46,11 @@ public class FrontendController {
         return ResponseEntity.ok(indicationsRepository.findAll());
     }
 
+    @GetMapping("/alerts")
+    public ResponseEntity<List<Indications>> alerts(){
+        return ResponseEntity.ok(indicationsRepository.findByCO2AfterAndTVOCAfter(simpleMqttCallBack.getCO2(), simpleMqttCallBack.getTVOC()));
+    }
+
     @PostMapping("/set_criticals")
     public void setCriticals(@RequestBody Indications indications){
         simpleMqttCallBack.setCO2(indications.getCO2());

@@ -8,9 +8,11 @@ import number_pb2
 class CalculationService(number_pb2_grpc.CalculationServiceServicer):
 
     def streamingMax(self, request_iterator, context):
-        # current_max = -1
-        for number in request_iterator:
-            yield number_pb2.StreamingMaxResponse(result=5)
+        current_max = -1
+        for iterable in request_iterator:
+            if current_max < iterable.number:
+                current_max = iterable.number
+            yield number_pb2.StreamingMaxResponse(result=current_max)
 
 
 def serve():
