@@ -45,7 +45,7 @@ def on_message(client, userdata, msg):
         publish_indications()
     elif command == 'alert':
         print(command)
-        # requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command', data={'command': 'alert'})
+        requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command', data={'command': 'alert'})
     elif command == 'alert_off':
         requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command',
                       data={'command': 'alert_off'})
