@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message StreamingMaxRequest {
+  int64 number = 1;
+}
+
+message StreamingMaxResponse {
+  int64 result = 1;
+}
+
+service CalculationService {
+   rpc streamingMax(stream StreamingMaxRequest) returns (stream StreamingMaxResponse){}
+}
