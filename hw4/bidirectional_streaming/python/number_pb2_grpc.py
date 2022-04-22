@@ -15,7 +15,7 @@ class CalculationServiceStub(object):
             channel: A grpc.Channel.
         """
         self.streamingMax = channel.stream_stream(
-                '/CalculationService/streamingMax',
+                '/number.CalculationService/streamingMax',
                 request_serializer=number__pb2.StreamingMaxRequest.SerializeToString,
                 response_deserializer=number__pb2.StreamingMaxResponse.FromString,
                 )
@@ -40,7 +40,7 @@ def add_CalculationServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'CalculationService', rpc_method_handlers)
+            'number.CalculationService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -59,7 +59,7 @@ class CalculationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/CalculationService/streamingMax',
+        return grpc.experimental.stream_stream(request_iterator, target, '/number.CalculationService/streamingMax',
             number__pb2.StreamingMaxRequest.SerializeToString,
             number__pb2.StreamingMaxResponse.FromString,
             options, channel_credentials,

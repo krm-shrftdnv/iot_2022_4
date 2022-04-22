@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cnumber.proto\"%\n\x13StreamingMaxRequest\x12\x0e\n\x06number\x18\x01 \x01(\x03\"&\n\x14StreamingMaxResponse\x12\x0e\n\x06result\x18\x01 \x01(\x03\x32W\n\x12\x43\x61lculationService\x12\x41\n\x0cstreamingMax\x12\x14.StreamingMaxRequest\x1a\x15.StreamingMaxResponse\"\x00(\x01\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cnumber.proto\x12\x06number\"%\n\x13StreamingMaxRequest\x12\x0e\n\x06number\x18\x01 \x01(\x03\"&\n\x14StreamingMaxResponse\x12\x0e\n\x06result\x18\x01 \x01(\x03\x32\x65\n\x12\x43\x61lculationService\x12O\n\x0cstreamingMax\x12\x1b.number.StreamingMaxRequest\x1a\x1c.number.StreamingMaxResponse\"\x00(\x01\x30\x01\x62\x06proto3')
 
 
 
@@ -23,14 +23,14 @@ _STREAMINGMAXRESPONSE = DESCRIPTOR.message_types_by_name['StreamingMaxResponse']
 StreamingMaxRequest = _reflection.GeneratedProtocolMessageType('StreamingMaxRequest', (_message.Message,), {
   'DESCRIPTOR' : _STREAMINGMAXREQUEST,
   '__module__' : 'number_pb2'
-  # @@protoc_insertion_point(class_scope:StreamingMaxRequest)
+  # @@protoc_insertion_point(class_scope:number.StreamingMaxRequest)
   })
 _sym_db.RegisterMessage(StreamingMaxRequest)
 
 StreamingMaxResponse = _reflection.GeneratedProtocolMessageType('StreamingMaxResponse', (_message.Message,), {
   'DESCRIPTOR' : _STREAMINGMAXRESPONSE,
   '__module__' : 'number_pb2'
-  # @@protoc_insertion_point(class_scope:StreamingMaxResponse)
+  # @@protoc_insertion_point(class_scope:number.StreamingMaxResponse)
   })
 _sym_db.RegisterMessage(StreamingMaxResponse)
 
@@ -38,10 +38,10 @@ _CALCULATIONSERVICE = DESCRIPTOR.services_by_name['CalculationService']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _STREAMINGMAXREQUEST._serialized_start=16
-  _STREAMINGMAXREQUEST._serialized_end=53
-  _STREAMINGMAXRESPONSE._serialized_start=55
-  _STREAMINGMAXRESPONSE._serialized_end=93
-  _CALCULATIONSERVICE._serialized_start=95
-  _CALCULATIONSERVICE._serialized_end=182
+  _STREAMINGMAXREQUEST._serialized_start=24
+  _STREAMINGMAXREQUEST._serialized_end=61
+  _STREAMINGMAXRESPONSE._serialized_start=63
+  _STREAMINGMAXRESPONSE._serialized_end=101
+  _CALCULATIONSERVICE._serialized_start=103
+  _CALCULATIONSERVICE._serialized_end=204
 # @@protoc_insertion_point(module_scope)
