@@ -49,7 +49,7 @@ def on_message(client, userdata, msg):
             client_streamer.publish(INDICATIONS_TOPIC, json.dumps(response.json()))
     elif command == 'alert':
         print(command)
-        requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command', data={'command': 'alert'})
+        requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command', json={'command': 'alert'})
     elif command == 'alert_off':
         requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command',
                       data={'command': 'alert_off'})
