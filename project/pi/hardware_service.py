@@ -6,11 +6,10 @@ import json
 app = Flask(__name__)
 
 ALERT = False
-LED_PIN = 21
+LED_PIN = 40
 
 
 def turn_led_on():
-    IO.setmode(IO.BCM)
     IO.setup(LED_PIN, IO.OUT)
     IO.output(LED_PIN, 1)
 
