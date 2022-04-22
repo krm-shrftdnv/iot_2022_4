@@ -40,11 +40,11 @@ def command():
         if command == 'alert':
             if not ALERT:
                 turn_led_on()
-                ALERT = False
+                ALERT = True
         elif command == 'alert_off':
             if not ALERT:
                 turn_led_off()
-                ALERT = True
+                ALERT = False
         else:
             return json.dumps({'error': 'Unsupported command'}), 400
         return json.dumps({'result': 'OK'}), 200
