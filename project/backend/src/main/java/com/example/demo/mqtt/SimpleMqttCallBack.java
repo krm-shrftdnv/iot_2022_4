@@ -43,6 +43,8 @@ public class SimpleMqttCallBack implements MqttCallback {
 
         if (indications.getCO2() > CO2 || indications.getTVOC() > tVOC) {
             publisher.publish("alert");
+        } else {
+            publisher.publish("alert_off");
         }
     }
 
