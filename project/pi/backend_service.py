@@ -23,10 +23,11 @@ def on_connect(client, userdata, flags, rc):
 
 
 def publish_indications():
-    response = requests.get(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/indications')
-    if response.status_code == 200:
-        indications = response.json()
-        client_streamer.publish(INDICATIONS_TOPIC, json.dumps(response.json()))
+    if STREAM:
+        response = requests.get(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/indications')
+        if response.status_code == 200:
+            indications = response.json()
+            client_streamer.publish(INDICATIONS_TOPIC, json.dumps(response.json()))
 
 
 def publish_threaded(job_func):
@@ -42,7 +43,10 @@ def on_message(client, userdata, msg):
     print(message)
     command = json.loads(message)['command']
     if command == 'get':
-        publish_indications()
+        response = requests.get(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/indications')
+        if response.status_code == 200:
+            indications = response.json()
+            client_streamer.publish(INDICATIONS_TOPIC, json.dumps(response.json()))
     elif command == 'alert':
         print(command)
         requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command', data={'command': 'alert'})
