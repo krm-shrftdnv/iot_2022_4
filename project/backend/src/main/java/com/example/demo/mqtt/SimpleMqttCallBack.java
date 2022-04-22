@@ -5,13 +5,12 @@ import com.example.demo.repository.IndicationsRepository;
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Date;
 
 @Service
@@ -25,6 +24,19 @@ public class SimpleMqttCallBack implements MqttCallback {
     @Autowired
     MqttPublisher publisher;
 
+    @Autowired
+    MqttClient client;
+
+    @PostConstruct
+    public void init(){
+        try {
+            client.subscribe("itis_team_4/indications");
+            client.setCallback(this);
+        } catch (MqttException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private int CO2 = 1000;
     private int tVOC = 9;
 
@@ -33,6 +45,7 @@ public class SimpleMqttCallBack implements MqttCallback {
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("Connection to MQTT broker lost!");
+        throwable.printStackTrace();
     }
 
     @Override
@@ -40,7 +53,7 @@ public class SimpleMqttCallBack implements MqttCallback {
         Indications indications = gson.fromJson(new String(mqttMessage.getPayload()), Indications.class);
         indications.setCreatedAt(new Date());
         indicationsRepository.save(indications);
-
+        System.out.println(new String(mqttMessage.getPayload()));
         if (indications.getCO2() > CO2 || indications.getTVOC() > tVOC) {
             publisher.publish("alert");
         } else {

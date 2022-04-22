@@ -14,6 +14,8 @@ public class MqttPublisher {
 
     @Autowired
     ControlRepository controlRepository;
+    @Autowired
+    MqttClient client;
 
     Gson gson = new Gson();
 
@@ -22,16 +24,11 @@ public class MqttPublisher {
         Control control = controlRepository.save(Control.builder().command(messageString).build());
         messageString = gson.toJson(control);
 
-        MqttClient client = new MqttClient("https://broker.hivemq.com:1883", MqttClient.generateClientId());
-        client.connect();
         MqttMessage message = new MqttMessage();
         message.setPayload(messageString.getBytes());
         client.publish("itis_team_4/control", message);
 
         System.out.println("\tMessage '" + messageString + "' to 'itis_team_4/control'");
-
-        client.disconnect();
-
     }
 
 }

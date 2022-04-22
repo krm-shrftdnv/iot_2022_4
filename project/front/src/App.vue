@@ -1,15 +1,23 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3">
+      <div class="col-4">
         <form>
-          <input v-model="co2" placeholder="CO2" type="number" min="0">
-          <input v-model="tvoc" placeholder="tVOC" type="number" min="0">
+          CO2:<input v-model="co2" placeholder="CO2" type="number" min="0"><br>
+          tVOC:<input v-model="tvoc" placeholder="tVOC" type="number" min="0">
         </form>
         <button @click="save">Установить критические значения</button>
+        <br>
+        <button @click="stop">Stop</button>
+        <br>
+        <button @click="start">Start</button>
+        <div v-for="alert in alerts" :key="alert.id" class="alert alert-danger" role="alert">
+          Date: {{alert.created_at}}: CO2 {{alert.co2}} tVOC: {{alert.tvoc}}
+        </div>
       </div>
-      <div class="col-9">
-        <canvas id="chart"></canvas>
+      <div class="col-8">
+        <canvas id="chart-co2"></canvas>
+        <canvas id="chart-tvoc"></canvas>
       </div>
     </div>
   </div>
@@ -33,16 +41,16 @@ export default {
     alerts: [
       {
         "id": 0,
-        "CO2": 1000,
-        "tVOC": 9,
+        "co2": 1000,
+        "tvoc": 9,
         "created_at": "21.04.2022 10:10:00.00"
       }
     ],
     indications: [
       {
         "id": 0,
-        "CO2": 1000,
-        "tVOC": 9,
+        "co2": 1000,
+        "tvoc": 9,
         "created_at": "21.04.2022 10:10:00.00"
       }
     ],
@@ -50,9 +58,15 @@ export default {
 
   }),
   computed: {
-    chartData() {
+    chartDataCo2() {
       return this.indications.map(e => ({
-        y: e.CO2,
+        y: e.co2,
+        x: e.created_at
+      }))
+    },
+    chartDataTVOC() {
+      return this.indications.map(e => ({
+        y: e.tvoc,
         x: e.created_at
       }))
     },
@@ -74,15 +88,34 @@ export default {
     }
   },
   async mounted() {
-    let response = await axios.get('https://virtserver.swaggerhub.com/krm-shrftdnv/itis_team_4/0.0.1/indications')
+    let response = await axios.get('http://localhost:8080/indications')
     this.indications = response.data
-    let ctx = document.getElementById('chart').getContext('2d')
+    response = await axios.get('http://localhost:8080/alerts')
+    this.alerts = response.data
+    let ctx = document.getElementById('chart-co2').getContext('2d')
     new Chart(ctx, {
       type: 'line',
       data: {
         datasets: [{
           label: 'CO2',
-          data: this.chartData
+          data: this.chartDataCo2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    let ctx1 = document.getElementById('chart-tvoc').getContext('2d')
+    new Chart(ctx1, {
+      type: 'line',
+      data: {
+        datasets: [{
+          label: 'tVOC',
+          data: this.chartDataTVOC
         }]
       },
       options: {
@@ -95,21 +128,29 @@ export default {
     });
     this.mqttClient = mqtt.connect('ws://broker.hivemq.com:8000/mqtt')
     this.mqttClient.on('message', function (topic, message) {
-      if (message.toString() === 'alert') {
-        alert('CO2 is too high')
+      let payload = JSON.parse(message.toString())
+      if (payload.command === 'alert'){
+       console.log('co2 too high')
       }
     });
     this.mqttClient.subscribe('itis_team_4/control')
   },
+
   methods: {
     async save() {
-      await axios.post('https://virtserver.swaggerhub.com/krm-shrftdnv/itis_team_4/0.0.1/set_criticals',
+      await axios.post('http://localhost:8080/set_criticals',
           {
-            "CO2": this.co2,
-            "tVOC": this.tvoc
+            "co2": this.co2,
+            "tvoc": this.tvoc
           }
       )
-    }
+    },
+    async start() {
+      await axios.get('http://localhost:8080/start')
+    },
+    async stop() {
+      await axios.get('http://localhost:8080/stop')
+    },
   }
 }
 </script>
