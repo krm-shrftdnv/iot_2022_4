@@ -52,7 +52,7 @@ def on_message(client, userdata, msg):
         requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command', json={'command': 'alert'})
     elif command == 'alert_off':
         requests.post(f'http://{HARDWARE_SERVICE_ADDRESS}:{HARDWARE_SERVICE_PORT}/command',
-                      data={'command': 'alert_off'})
+                      json={'command': 'alert_off'})
     elif command == 'start':
         STREAM = True
     elif command == 'stop':
